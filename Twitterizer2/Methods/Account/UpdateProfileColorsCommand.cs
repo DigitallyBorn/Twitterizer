@@ -43,7 +43,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com
     /// </summary>
-    [AuthorizedCommand]
 #if !SILVERLIGHT
     [Serializable]
 #endif

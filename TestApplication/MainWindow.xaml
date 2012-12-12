@@ -1,0 +1,46 @@
+﻿<Window x:Class="TestApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TestApplication"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Consumer Key" Grid.Column="0" Grid.Row="0" />
+            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ConsumerKey}" />
+
+            <TextBlock Text="Consumer Secret" Grid.Column="0" Grid.Row="1" />
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding ConsumerSecret}" />
+
+            <TextBlock Text="Access Key" Grid.Column="0" Grid.Row="2" />
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding AccessKey}" />
+
+            <TextBlock Text="Access Secret" Grid.Column="0" Grid.Row="3" />
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding AccessSecret}" />
+            
+            <Button Content="Verify" Grid.Column="1" Grid.Row="4" Command="{Binding VerifyCommand}" />
+        </Grid>
+        
+        <TabControl Grid.Row="1" ItemsSource="{Binding TabItems}">
+
+        </TabControl>
+        
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Tweets}"/>
+    </Grid>
+</Window>

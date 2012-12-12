@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The retweet command class.
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

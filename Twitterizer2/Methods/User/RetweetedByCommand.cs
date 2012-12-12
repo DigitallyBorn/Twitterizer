@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// The retweeted by command class.
     /// </summary>
     /// <remarks>http://dev.twitter.com/doc/get/statuses/:id/retweeted_by</remarks>
-    [AuthorizedCommandAttribute]
     internal class RetweetedByCommand : TwitterCommand<TwitterUserCollection>
     {
         public RetweetedByCommand(OAuthTokens tokens, decimal statusId, RetweetedByOptions options)

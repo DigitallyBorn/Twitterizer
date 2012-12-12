@@ -40,6 +40,7 @@ namespace Twitterizer
     using System.IO;
     using System.Net;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using Twitterizer.Core;
 
     /// <summary>
@@ -55,7 +56,7 @@ namespace Twitterizer
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>A <see cref="OAuthTokenResponse"/> instance.</returns>
-        public static OAuthTokenResponse GetAccessTokens(string consumerKey, string consumerSecret, string username, string password)
+        public async static Task<OAuthTokenResponse> GetAccessTokens(string consumerKey, string consumerSecret, string username, string password)
         {
             if (string.IsNullOrEmpty(consumerKey))
             {
@@ -90,7 +91,7 @@ namespace Twitterizer
                 builder.Parameters.Add("x_auth_password", password);
                 builder.Parameters.Add("x_auth_mode", "client_auth");
 
-                string responseBody = new StreamReader(builder.ExecuteRequest().GetResponseStream()).ReadToEnd();
+                string responseBody = new StreamReader((await builder.ExecuteRequest()).GetResponseStream()).ReadToEnd();
 
                 response.Token = Regex.Match(responseBody, @"oauth_token=([^&]+)").Groups[1].Value;
                 response.TokenSecret = Regex.Match(responseBody, @"oauth_token_secret=([^&]+)").Groups[1].Value;

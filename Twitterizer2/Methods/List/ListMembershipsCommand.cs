@@ -42,7 +42,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The list membership command class
     /// </summary>
-    [AuthorizedCommandAttribute]
     internal sealed class ListMembershipsCommand : TwitterCommand<TwitterListCollection>
     {
         private readonly string screenname;

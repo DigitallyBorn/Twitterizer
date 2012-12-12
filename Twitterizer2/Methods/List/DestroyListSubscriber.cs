@@ -5,7 +5,6 @@ using System.Text;
 
 namespace Twitterizer.Commands
 {
-    [Core.AuthorizedCommand]
     internal class DestroyListSubscriber : Core.TwitterCommand<TwitterList>
     {
         /// <summary>

@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The Saved Searches Command class. Returns the saved searches collection when successful.
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

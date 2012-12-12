@@ -42,7 +42,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// Creates a friendship between the authenticated user and another user
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

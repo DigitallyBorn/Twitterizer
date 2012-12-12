@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// Check if a user is a member of the specified list.
     /// </summary>
-    [AuthorizedCommand]
 #if !SILVERLIGHT
     [Serializable]
 #endif

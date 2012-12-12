@@ -40,7 +40,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The blocking command class.
     /// </summary>
-    [AuthorizedCommand]
     sealed class BlockingCommand : TwitterCommand<TwitterUserCollection>
     {
         /// <summary>

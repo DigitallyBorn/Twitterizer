@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The Send Direct Message Command class
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

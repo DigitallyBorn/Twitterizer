@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The Create Saved Search Command class. Creates the Saved Search with the query provided as the authenticating user. Returns the saved search when successful.
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

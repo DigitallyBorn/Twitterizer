@@ -40,7 +40,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The Delete Direct Message Command class.
     /// </summary>
-    [AuthorizedCommand]
 #if !SILVERLIGHT
     [Serializable]
 #endif

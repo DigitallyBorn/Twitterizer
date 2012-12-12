@@ -42,7 +42,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The Direct Messages Command
     /// </summary>
-    [AuthorizedCommandAttribute]
     internal sealed class DirectMessagesCommand : TwitterCommand<TwitterDirectMessageCollection>
     {
         #region Constructors

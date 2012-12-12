@@ -36,6 +36,7 @@ namespace Twitterizer
     using System;
     using Newtonsoft.Json;
     using Twitterizer.Core;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Represents a suggested user category
@@ -81,23 +82,11 @@ namespace Twitterizer
         /// <param name="tokens">The tokens.</param>
         /// <param name="options">The options.</param>
         /// <returns>A collection of categories without user data.</returns>
-        public static TwitterResponse<TwitterUserCategoryCollection> SuggestedUserCategories(OAuthTokens tokens, OptionalProperties options)
+        public async static Task<TwitterResponse<TwitterUserCategoryCollection>> SuggestedUserCategories(OAuthTokens tokens, OptionalProperties options = null)
         {
             Commands.SuggestedUserCategoriesCommand command = new Commands.SuggestedUserCategoriesCommand(tokens, options);
 
-            return CommandPerformer.PerformAction(command);
-        }
-
-        /// <summary>
-        /// Access to Twitter's suggested user list. This returns the list of suggested user categories. The category can be used in the users/suggestions/category endpoint to get the users in that category.
-        /// </summary>
-        /// <param name="tokens">The tokens.</param>
-        /// <returns>
-        /// A collection of categories without user data.
-        /// </returns>
-        public static TwitterResponse<TwitterUserCategoryCollection> SuggestedUserCategories(OAuthTokens tokens)
-        {
-            return SuggestedUserCategories(tokens, null);
+            return await CommandPerformer.PerformAction(command);
         }
 
         /// <summary>
@@ -108,23 +97,11 @@ namespace Twitterizer
         /// <param name="options">The options.</param>
         /// <returns></returns>
         /// <remarks>It is recommended that end clients cache this data for no more than one hour.</remarks>
-        public static TwitterResponse<TwitterUserCategory> SuggestedUsers(OAuthTokens tokens, string categorySlug, OptionalProperties options)
+        public async static Task<TwitterResponse<TwitterUserCategory>> SuggestedUsers(OAuthTokens tokens, string categorySlug, OptionalProperties options = null)
         {
             Commands.SuggestedUsersCommand command = new Commands.SuggestedUsersCommand(tokens, categorySlug, options);
 
-            return CommandPerformer.PerformAction(command);
-        }
-
-        /// <summary>
-        /// Access the users in a given category of the Twitter suggested user list.
-        /// </summary>
-        /// <param name="tokens">The tokens.</param>
-        /// <param name="categorySlug">The category slug.</param>
-        /// <returns></returns>
-        /// <remarks>It is recommended that end clients cache this data for no more than one hour.</remarks>
-        public static TwitterResponse<TwitterUserCategory> SuggestedUsers(OAuthTokens tokens, string categorySlug)
-        {
-            return SuggestedUsers(tokens, categorySlug, null);
+            return await CommandPerformer.PerformAction(command);
         }
     }
 

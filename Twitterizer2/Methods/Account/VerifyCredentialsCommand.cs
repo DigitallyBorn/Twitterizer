@@ -39,7 +39,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The verify credentials command class.
     /// </summary>
-    [AuthorizedCommand]
 #if !SILVERLIGHT
     [System.Serializable]
 #endif

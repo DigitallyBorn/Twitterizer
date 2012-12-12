@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Twitterizer</RootNamespace>
     <AssemblyName>Twitterizer2</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Twitterizer2.snk</AssemblyOriginatorKeyFile>
@@ -19,7 +19,8 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -47,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Debug\Twitterizer2\Full\Twitterizer2.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,6 +59,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Release\net40\Twitterizer2.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,6 +70,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Release|AnyCPU' ">
     <OutputPath>bin\Mono-Release\</OutputPath>
@@ -78,6 +82,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'CCNET|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,14 +93,15 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -108,8 +114,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Attributes\RateLimitedAttribute.cs" />
-    <Compile Include="Attributes\AuthorizedCommandAttribute.cs" />
+    <Compile Include="CoordinateCollection.cs" />
     <Compile Include="Core\TwitterDictionary.cs" />
     <Compile Include="Core\RequestResult.cs" />
     <Compile Include="Core\TwitterCursorPagedIdCollection.cs" />
@@ -120,7 +125,7 @@
     <Compile Include="Core\TwitterImage.cs" />
     <Compile Include="Core\TwitterizerDateConverter.cs" />
     <Compile Include="Exceptions\TwitterErrorDetails.cs" />
-    <Compile Include="Methods\Account\TwitterAccount.cs" />
+    <Compile Include="TwitterAccount.cs" />
     <Compile Include="Methods\Account\UpdateProfileBackgroundImageCommand.cs" />
     <Compile Include="Methods\Account\UpdateProfileBackgroundImageOptions.cs" />
     <Compile Include="Methods\Account\UpdateProfileColorsCommand.cs" />
@@ -136,7 +141,7 @@
     <Compile Include="Methods\Block\ExistsBlockCommand.cs" />
     <Compile Include="Methods\Block\DestroyBlockCommand.cs" />
     <Compile Include="Methods\Block\CreateBlockCommand.cs" />
-    <Compile Include="Methods\Block\TwitterBlock.cs" />
+    <Compile Include="TwitterBlock.cs" />
     <Compile Include="Methods\DirectMessage\DeleteDirectMessageCommand.cs" />
     <Compile Include="Methods\DirectMessage\DirectMessagesCommand.cs" />
     <Compile Include="Methods\DirectMessage\DirectMessagesOptions.cs" />
@@ -144,34 +149,32 @@
     <Compile Include="Methods\DirectMessage\DirectMessagesSentOptions.cs" />
     <Compile Include="Methods\DirectMessage\SendDirectMessageCommand.cs" />
     <Compile Include="Methods\DirectMessage\ShowDirectMessageCommand.cs" />
-    <Compile Include="Methods\DirectMessage\TwitterDirectMessage.cs" />
+    <Compile Include="TwitterContributor.cs" />
+    <Compile Include="TwitterDirectMessage.cs" />
     <Compile Include="Methods\DirectMessage\TwitterDirectMessageCollection.cs" />
     <Compile Include="Methods\Favorites\CreateFavoriteCommand.cs" />
     <Compile Include="Methods\Favorites\DeleteFavoriteCommand.cs" />
     <Compile Include="Methods\Favorites\ListFavoritesCommand.cs" />
     <Compile Include="Methods\Favorites\ListFavoritesOptions.cs" />
-    <Compile Include="Methods\Favorites\TwitterFavorite.cs" />
+    <Compile Include="TwitterFavorite.cs" />
     <Compile Include="Methods\Friendship\UpdateFriendshipOptions.cs" />
     <Compile Include="Methods\Friendship\UpdateFriendshipCommand.cs" />
     <Compile Include="Methods\Friendship\NoRetweetIDsCommand.cs" />
-    <Compile Include="Methods\Friendship\TwitterRelationship.cs" />
+    <Compile Include="TwitterRelationship.cs" />
     <Compile Include="Methods\Friendship\OutgoingFriendshipsCommand.cs" />
     <Compile Include="Methods\Friendship\OutgoingFriendshipsOptions.cs" />
     <Compile Include="Methods\Friendship\FriendsIdsCommand.cs" />
     <Compile Include="Methods\Friendship\IncomingFriendshipsCommand.cs" />
     <Compile Include="Methods\Friendship\IncomingFriendshipsOptions.cs" />
-    <Compile Include="Methods\Friendship\UserIdCollection.cs" />
+    <Compile Include="UserIdCollection.cs" />
     <Compile Include="Methods\Friendship\FollowersIdsCommand.cs" />
     <Compile Include="Methods\Friendship\UsersIdsOptions.cs" />
     <Compile Include="Methods\Friendship\CreateFriendshipCommand.cs" />
     <Compile Include="Methods\Friendship\CreateFriendshipOptions.cs" />
-    <Compile Include="Methods\Friendship\TwitterFriendship.cs" />
+    <Compile Include="TwitterFriendship.cs" />
     <Compile Include="Methods\Geo\Coordinate.cs" />
-    <Compile Include="Methods\Geo\ReverseGeocodeCommand.cs" />
     <Compile Include="Methods\Geo\TwitterBoundingBox.cs" />
-    <Compile Include="Methods\Geo\TwitterGeo.cs" />
-    <Compile Include="Methods\Geo\TwitterPlace.cs" />
-    <Compile Include="Methods\Geo\TwitterPlaceCollection.cs" />
+    <Compile Include="TwitterGeo.cs" />
     <Compile Include="Methods\Geo\TwitterPlaceLookupOptions.cs" />
     <Compile Include="Methods\List\AddListMemberCommand.cs" />
     <Compile Include="Methods\List\CheckListMembershipCommand.cs" />
@@ -191,15 +194,15 @@
     <Compile Include="Methods\List\UpdateListOptions.cs" />
     <Compile Include="Methods\Notification\NotificationLeaveCommand.cs" />
     <Compile Include="Methods\Notification\NotificationFollowCommand.cs" />
-    <Compile Include="Methods\Notification\TwitterNotification.cs" />
+    <Compile Include="TwitterNotification.cs" />
     <Compile Include="Methods\SavedSearches\SavedSearchesCommand.cs" />
     <Compile Include="Methods\SavedSearches\CreateSavedSearchCommand.cs" />
     <Compile Include="Methods\SavedSearches\DeleteSavedSearchCommand.cs" />
-    <Compile Include="Methods\SavedSearches\TwitterSavedSearch.cs" />
+    <Compile Include="TwitterSavedSearch.cs" />
     <Compile Include="Methods\SavedSearches\TwitterSavedSearchCollection.cs" />
     <Compile Include="Methods\Search\SearchOptions.cs" />
     <Compile Include="Methods\Spam\ReportSpamCommand.cs" />
-    <Compile Include="Methods\Spam\TwitterSpam.cs" />
+    <Compile Include="TwitterSpam.cs" />
     <Compile Include="Methods\Timeline\PagedTimelineCommand.cs" />
     <Compile Include="Methods\Timeline\UserTimelineOptions.cs" />
     <Compile Include="Methods\Trends\AvailableTrendsCommand.cs" />
@@ -215,7 +218,7 @@
     <Compile Include="Methods\Trends\LocalTrendsOptions.cs" />
     <Compile Include="Methods\Search\SearchCommand.cs" />
     <Compile Include="Methods\Timeline\TimelineOptions.cs" />
-    <Compile Include="Methods\Timeline\TwitterTimeline.cs" />
+    <Compile Include="TwitterTimeline.cs" />
     <Compile Include="Methods\Trends\TwitterTrendCollection.cs" />
     <Compile Include="Methods\Tweets\DeleteStatusCommand.cs" />
     <Compile Include="Methods\Tweets\Entities\TwitterEntity.cs" />
@@ -224,16 +227,13 @@
     <Compile Include="Methods\Tweets\Entities\TwitterMediaEntity.cs" />
     <Compile Include="Methods\Tweets\Entities\TwitterMentionEntity.cs" />
     <Compile Include="Methods\Tweets\Entities\TwitterUrlEntity.cs" />
-    <Compile Include="Methods\Tweets\RelatedResultsCommand.cs" />
     <Compile Include="Methods\Tweets\UpdateWithmediaCommand.cs" />
     <Compile Include="Methods\User\RetweetedByCommand.cs" />
     <Compile Include="Methods\User\RetweetedByIdsCommand.cs" />
     <Compile Include="Methods\User\RetweetedByIdsOptions.cs" />
     <Compile Include="Methods\User\RetweetedByOptions.cs" />
-    <Compile Include="Methods\Tweets\TwitterRelatedTweets.cs" />
     <Compile Include="Methods\Tweets\RetweetsOfMeOptions.cs" />
     <Compile Include="Methods\Tweets\RetweetsOptions.cs" />
-    <Compile Include="Methods\Tweets\TwitterRelatedTweetsCollection.cs" />
     <Compile Include="Methods\User\FollowersOptions.cs" />
     <Compile Include="Methods\User\FriendsCommand.cs" />
     <Compile Include="Methods\Timeline\FriendsTimelineCommand.cs" />
@@ -243,11 +243,8 @@
     <Compile Include="Methods\List\ListMembershipsCommand.cs" />
     <Compile Include="Methods\List\ListStatusesCommand.cs" />
     <Compile Include="Methods\Timeline\MentionsCommand.cs" />
-    <Compile Include="Methods\Timeline\PublicTimelineCommand.cs" />
     <Compile Include="Methods\Account\RateLimitStatusCommand.cs" />
     <Compile Include="Methods\Tweets\RetweetCommand.cs" />
-    <Compile Include="Methods\Timeline\RetweetedByMeCommand.cs" />
-    <Compile Include="Methods\Timeline\RetweetedToMeCommand.cs" />
     <Compile Include="Methods\Tweets\RetweetsCommand.cs" />
     <Compile Include="Methods\Tweets\RetweetsOfMeCommand.cs" />
     <Compile Include="Methods\Friendship\ShowFriendshipCommand.cs" />
@@ -284,20 +281,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\OptionalProperties.cs" />
     <Compile Include="Methods\Tweets\StatusUpdateOptions.cs" />
-    <Compile Include="Methods\List\TwitterList.cs" />
+    <Compile Include="Methods\TwitterList.cs" />
     <Compile Include="Methods\List\TwitterListCollection.cs" />
-    <Compile Include="Methods\Account\TwitterRateLimitStatus.cs" />
-    <Compile Include="Methods\Friendship\TwitterRelationshipUser.cs" />
+    <Compile Include="TwitterRateLimitStatus.cs" />
+    <Compile Include="TwitterRelationshipUser.cs" />
     <Compile Include="Methods\TwitterResultTypeEnum.cs" />
-    <Compile Include="Methods\Search\TwitterSearch.cs" />
+    <Compile Include="TwitterSearch.cs" />
     <Compile Include="Methods\Search\TwitterSearchResult.cs" />
     <Compile Include="Methods\Search\TwitterSearchResultCollection.cs" />
-    <Compile Include="Methods\Tweets\TwitterStatus.cs" />
-    <Compile Include="Methods\Tweets\TwitterStatusCollection.cs" />
-    <Compile Include="Methods\Trends\TwitterTrend.cs" />
-    <Compile Include="Methods\User\TwitterUserCollection.cs" />
+    <Compile Include="TwitterStatus.cs" />
+    <Compile Include="TwitterStatusCollection.cs" />
+    <Compile Include="TwitterTrend.cs" />
+    <Compile Include="TwitterUserCollection.cs" />
     <Compile Include="Exceptions\TwitterizerException.cs" />
-    <Compile Include="Methods\User\TwitterUser.cs" />
+    <Compile Include="TwitterUser.cs" />
     <Compile Include="TwitterResponse.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,8 +305,8 @@
     <None Include="Twitterizer2Inheritance.cd" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Methods\Tweets\TwitterStatus.xml" />
-    <None Include="Methods\User\TwitterUser.xml" />
+    <None Include="TwitterStatus.xml" />
+    <None Include="TwitterUser.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OAuth\OAuthTokens.xml" />
@@ -320,7 +317,9 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>

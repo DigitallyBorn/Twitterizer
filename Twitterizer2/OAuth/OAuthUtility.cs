@@ -42,6 +42,7 @@ namespace Twitterizer
     using System.Text.RegularExpressions;
 #if !SILVERLIGHT
     using System.Web;
+    using System.Threading.Tasks;
 #endif
 
     /// <include file='OAuthUtility.xml' path='OAuthUtility/OAuthUtility/*'/>
@@ -55,7 +56,7 @@ namespace Twitterizer
         /// <param name="consumerSecret">The consumer secret.</param>
         /// <param name="callbackAddress">The callback address. For PIN-based authentication "oob" should be supplied.</param>
         /// <returns></returns>
-        public static OAuthTokenResponse GetRequestToken(string consumerKey, string consumerSecret, string callbackAddress)
+        public async static Task<OAuthTokenResponse> GetRequestToken(string consumerKey, string consumerSecret, string callbackAddress)
         {
             if (string.IsNullOrEmpty(consumerKey))
             {
@@ -86,7 +87,7 @@ namespace Twitterizer
 
             try
             {
-                HttpWebResponse webResponse = builder.ExecuteRequest();
+                HttpWebResponse webResponse = (HttpWebResponse)await builder.ExecuteRequest();
                 Stream responseStream = webResponse.GetResponseStream();
                 if (responseStream != null) responseBody = new StreamReader(responseStream).ReadToEnd();
             }
@@ -133,7 +134,7 @@ namespace Twitterizer
         /// <returns>
         /// A new <see cref="Twitterizer.OAuthTokenResponse"/> instance.
         /// </returns>
-        public static OAuthTokenResponse GetRequestToken(string consumerKey, string consumerSecret, string callbackAddress, WebProxy proxy)
+        public async static Task<OAuthTokenResponse> GetRequestToken(string consumerKey, string consumerSecret, string callbackAddress, WebProxy proxy)
         {
             if (string.IsNullOrEmpty(consumerKey))
             {
@@ -164,7 +165,7 @@ namespace Twitterizer
 
             try
             {
-                HttpWebResponse webResponse = builder.ExecuteRequest();
+                HttpWebResponse webResponse = (HttpWebResponse)await builder.ExecuteRequest();
                 Stream responseStream = webResponse.GetResponseStream();
                 if (responseStream != null) responseBody = new StreamReader(responseStream).ReadToEnd();
             }
@@ -195,7 +196,7 @@ namespace Twitterizer
         /// <returns>
         /// An <see cref="OAuthTokenResponse"/> class containing access token information.
         /// </returns>
-        public static OAuthTokenResponse GetAccessToken(string consumerKey, string consumerSecret, string requestToken, string verifier)
+        public async static Task<OAuthTokenResponse> GetAccessToken(string consumerKey, string consumerSecret, string requestToken, string verifier)
         {
             if (string.IsNullOrEmpty(consumerKey))
             {
@@ -215,7 +216,7 @@ namespace Twitterizer
             WebRequestBuilder builder = new WebRequestBuilder(
                 new Uri("https://api.twitter.com/oauth/access_token"),
                 HTTPVerb.GET,
-				new OAuthTokens { ConsumerKey = consumerKey, ConsumerSecret = consumerSecret });
+                new OAuthTokens { ConsumerKey = consumerKey, ConsumerSecret = consumerSecret });
 
             if (!string.IsNullOrEmpty(verifier))
             {
@@ -228,7 +229,7 @@ namespace Twitterizer
 
             try
             {
-                HttpWebResponse webResponse = builder.ExecuteRequest();
+                HttpWebResponse webResponse = (HttpWebResponse)await builder.ExecuteRequest();
 
                 responseBody = new StreamReader(webResponse.GetResponseStream()).ReadToEnd();
             }
@@ -257,7 +258,7 @@ namespace Twitterizer
         /// <returns>
         /// An <see cref="OAuthTokenResponse"/> class containing access token information.
         /// </returns>
-        public static OAuthTokenResponse GetAccessToken(string consumerKey, string consumerSecret, string requestToken, string verifier, WebProxy proxy)
+        public async static Task<OAuthTokenResponse> GetAccessToken(string consumerKey, string consumerSecret, string requestToken, string verifier, WebProxy proxy = null)
         {
             if (string.IsNullOrEmpty(consumerKey))
             {
@@ -277,7 +278,7 @@ namespace Twitterizer
             WebRequestBuilder builder = new WebRequestBuilder(
                 new Uri("https://api.twitter.com/oauth/access_token"),
                 HTTPVerb.GET,
-				new OAuthTokens { ConsumerKey = consumerKey, ConsumerSecret = consumerSecret });
+                new OAuthTokens { ConsumerKey = consumerKey, ConsumerSecret = consumerSecret });
 
             builder.Proxy = proxy;
 
@@ -292,7 +293,7 @@ namespace Twitterizer
 
             try
             {
-                HttpWebResponse webResponse = builder.ExecuteRequest();
+                HttpWebResponse webResponse = (HttpWebResponse)await builder.ExecuteRequest();
 
                 responseBody = new StreamReader(webResponse.GetResponseStream()).ReadToEnd();
             }
@@ -315,19 +316,9 @@ namespace Twitterizer
         /// Builds the authorization URI.
         /// </summary>
         /// <param name="requestToken">The request token.</param>
-        /// <returns>A new <see cref="Uri"/> instance.</returns>
-        public static Uri BuildAuthorizationUri(string requestToken)
-        {
-            return BuildAuthorizationUri(requestToken, false);
-        }
-
-        /// <summary>
-        /// Builds the authorization URI.
-        /// </summary>
-        /// <param name="requestToken">The request token.</param>
         /// <param name="authenticate">if set to <c>true</c>, the authenticate url will be used. (See: "Sign in with Twitter")</param>
         /// <returns>A new <see cref="Uri"/> instance.</returns>
-        public static Uri BuildAuthorizationUri(string requestToken, bool authenticate)
+        public static Uri BuildAuthorizationUri(string requestToken, bool authenticate = false)
         {
             StringBuilder parameters = new StringBuilder("https://twitter.com/oauth/");
 
@@ -354,9 +345,9 @@ namespace Twitterizer
         public static void AddOAuthEchoHeader(WebRequest request, OAuthTokens tokens)
         {
             WebRequestBuilder builder = new WebRequestBuilder(
-                new Uri("https://api.twitter.com/1/account/verify_credentials.json"), 
+                new Uri("https://api.twitter.com/1/account/verify_credentials.json"),
                 HTTPVerb.POST,
-				tokens);
+                tokens);
 
             builder.PrepareRequest();
 

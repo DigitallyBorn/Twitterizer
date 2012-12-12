@@ -49,12 +49,6 @@ namespace Twitterizer
         public int Count { get;set; }
 
         /// <summary>
-        /// Gets or sets the user name or id of the user for whom to return results for.
-        /// </summary>
-        /// <value>The user name or id of the user for whom to return results for.</value>
-        public string UserNameOrId { get; set; }
-
-        /// <summary>
         /// Gets or sets the page.
         /// </summary>
         /// <value>The page number.</value>

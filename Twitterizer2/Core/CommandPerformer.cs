@@ -32,6 +32,7 @@
 // <summary>The command performer.</summary>
 //-----------------------------------------------------------------------
 
+using System.Threading.Tasks;
 namespace Twitterizer.Core
 {
     internal static class CommandPerformer
@@ -43,12 +44,12 @@ namespace Twitterizer.Core
         /// <returns>The parsed result of the action.</returns>
         /// <seealso cref="Twitterizer.Core.TwitterCommand{T}"/>
         /// <seealso cref="Twitterizer.Core.TwitterObject"/>
-        public static TwitterResponse<T> PerformAction<T>(ICommand<T> command)
+        public async static Task<TwitterResponse<T>> PerformAction<T>(ICommand<T> command)
             where T : ITwitterObject
         {
             command.Init();
 
-            return command.ExecuteCommand();
+            return await command.ExecuteCommand();
         }
     }
 }

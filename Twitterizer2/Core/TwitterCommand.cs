@@ -39,10 +39,8 @@ namespace Twitterizer.Core
     using System.Net;
     using System.Linq;
     using System.Text;
-#if !SILVERLIGHT
-    using System.Web;
-#endif
     using Twitterizer;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The base command class.
@@ -122,42 +120,13 @@ namespace Twitterizer.Core
         /// Executes the command.
         /// </summary>
         /// <returns>The results of the command.</returns>
-        public TwitterResponse<T> ExecuteCommand()
+        public async Task<TwitterResponse<T>> ExecuteCommand()
         {
             TwitterResponse<T> twitterResponse = new TwitterResponse<T>();
 
             if (this.OptionalProperties.UseSSL)
             {
                 this.Uri = new Uri(this.Uri.AbsoluteUri.Replace("http://", "https://"));
-            }
-
-            // Loop through all of the custom attributes assigned to the command class
-            foreach (Attribute attribute in this.GetType().GetCustomAttributes(false))
-            {
-                if (attribute is AuthorizedCommandAttribute)
-                {
-                    if (this.Tokens == null)
-                    {
-                        throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Tokens are required for the \"{0}\" command.", this.GetType()));
-                    }
-
-                    if (string.IsNullOrEmpty(this.Tokens.ConsumerKey) ||
-                        string.IsNullOrEmpty(this.Tokens.ConsumerSecret) ||
-                        string.IsNullOrEmpty(this.Tokens.AccessToken) ||
-                        string.IsNullOrEmpty(this.Tokens.AccessTokenSecret))
-                    {
-                        throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Token values cannot be null when executing the \"{0}\" command.", this.GetType()));
-                    }
-                }
-                else if (attribute is RateLimitedAttribute)
-                {
-                    // Get the rate limiting status
-                    if (TwitterRateLimitStatus.GetStatus(this.Tokens).ResponseObject.RemainingHits == 0)
-                    {
-                        throw new TwitterizerException("You are being rate limited.");
-                    }
-                }
-
             }
 
             // Prepare the query parameters
@@ -176,7 +145,7 @@ namespace Twitterizer.Core
 
             try
             {
-				WebRequestBuilder requestBuilder = new WebRequestBuilder(this.Uri, this.Verb, this.Tokens) { Multipart = this.Multipart };
+                WebRequestBuilder requestBuilder = new WebRequestBuilder(this.Uri, this.Verb, this.Tokens) { Multipart = this.Multipart };
 
 #if !SILVERLIGHT
                 if (this.OptionalProperties != null)
@@ -188,7 +157,7 @@ namespace Twitterizer.Core
                     requestBuilder.Parameters.Add(item.Key, item.Value);
                 }
 
-                HttpWebResponse response = requestBuilder.ExecuteRequest();
+                HttpWebResponse response = (HttpWebResponse)await requestBuilder.ExecuteRequest();
 
                 if (response == null)
                 {
@@ -210,7 +179,6 @@ namespace Twitterizer.Core
 #else
                 rateLimiting = null;
                 accessLevel = AccessLevel.Unknown;
-
 #endif
 
                 // Lookup the status code and set the status accordingly
@@ -280,22 +248,7 @@ namespace Twitterizer.Core
                 return twitterResponse;
             }
 
-            try
-            {
-                twitterResponse.ResponseObject = SerializationHelper<T>.Deserialize(responseData, this.DeserializationHandler);
-            }
-            catch (Newtonsoft.Json.JsonReaderException)
-            {
-                twitterResponse.ErrorMessage = "Unable to parse JSON";
-                twitterResponse.Result = RequestResult.Unknown;
-                return twitterResponse;
-            }
-            catch (Newtonsoft.Json.JsonSerializationException)
-            {
-                twitterResponse.ErrorMessage = "Unable to parse JSON";
-                twitterResponse.Result = RequestResult.Unknown;
-                return twitterResponse;
-            }
+            this.DeserializeResults(responseData, twitterResponse);
 
             // Pass the current oauth tokens into the new object, so method calls from there will keep the authentication.
             twitterResponse.Tokens = this.Tokens;
@@ -387,11 +340,11 @@ namespace Twitterizer.Core
                 rateLimiting.ResetDate = DateTime.SpecifyKind(new DateTime(1970, 1, 1, 0, 0, 0, 0)
                     .AddSeconds(double.Parse(responseHeaders["X-RateLimit-Reset"], CultureInfo.InvariantCulture)), DateTimeKind.Utc);
             }
-            else if(!string.IsNullOrEmpty(responseHeaders["Retry-After"]))
+            else if (!string.IsNullOrEmpty(responseHeaders["Retry-After"]))
             {
                 rateLimiting.ResetDate = DateTime.UtcNow.AddSeconds(Convert.ToInt32(responseHeaders["Retry-After"]));
             }
-            
+
             return rateLimiting;
         }
 
@@ -417,6 +370,26 @@ namespace Twitterizer.Core
                 return AccessLevel.Unknown;
             }
             return AccessLevel.Unavailable;
+        }
+
+        public virtual void DeserializeResults(byte[] data, TwitterResponse<T> response)
+        {
+            try
+            {
+                response.ResponseObject = SerializationHelper<T>.Deserialize(data, this.DeserializationHandler);
+            }
+            catch (Newtonsoft.Json.JsonReaderException)
+            {
+                response.ErrorMessage = "Unable to parse JSON";
+                response.Result = RequestResult.Unknown;
+                return;
+            }
+            catch (Newtonsoft.Json.JsonSerializationException)
+            {
+                response.ErrorMessage = "Unable to parse JSON";
+                response.Result = RequestResult.Unknown;
+                return;
+            }
         }
     }
 }

@@ -46,15 +46,19 @@ namespace Twitterizer.Commands
 #endif
     internal sealed class ListFavoritesCommand : TwitterCommand<TwitterStatusCollection>
     {
+        public decimal? UserId { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ListFavoritesCommand"/> class.
         /// </summary>
         /// <param name="tokens">The tokens.</param>
         /// <param name="options">The options.</param>
-        public ListFavoritesCommand(OAuthTokens tokens, ListFavoritesOptions options)
+        public ListFavoritesCommand(OAuthTokens tokens, ListFavoritesOptions options, decimal? userId)
             : base(HTTPVerb.GET, "favorites.json", tokens, options)
         {
-            if (tokens == null && (options == null || string.IsNullOrEmpty(options.UserNameOrId)))
+            this.UserId = userId;
+
+            if (tokens == null && userId == null)
             {
                 throw new ArgumentException("Valid tokens or user must be supplied.");
             }
@@ -77,9 +81,9 @@ namespace Twitterizer.Commands
             
             this.RequestParameters.Add("page", options.Page > 0 ? options.Page.ToString(CultureInfo.InvariantCulture) : "1");
 
-            if (!string.IsNullOrEmpty(options.UserNameOrId))
+            if (this.UserId != null)
             {
-                this.RequestParameters.Add("id", options.UserNameOrId);
+                this.RequestParameters.Add("id", this.UserId.Value);
             }
 
             if (options.Count > 0)

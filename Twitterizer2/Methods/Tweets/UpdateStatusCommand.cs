@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The command to update the user's status. (a.k.a. post a new tweet)
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

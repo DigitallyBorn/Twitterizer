@@ -43,7 +43,6 @@ namespace Twitterizer.Commands
 #if !SILVERLIGHT
     [Serializable]
 #endif
-    [AuthorizedCommandAttribute]
     internal sealed class HomeTimelineCommand : PagedTimelineCommand
     {
         /// <summary>

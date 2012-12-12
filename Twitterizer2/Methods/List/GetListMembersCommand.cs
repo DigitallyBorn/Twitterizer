@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// Returns the members of the specified list.
     /// </summary>
-    [AuthorizedCommand]
     internal class GetListMembersCommand : TwitterCommand<TwitterUserCollection>
     {
         /// <summary>

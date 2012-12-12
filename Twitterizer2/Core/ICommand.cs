@@ -34,6 +34,7 @@
 namespace Twitterizer.Core
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The ICommand interface.
@@ -59,6 +60,13 @@ namespace Twitterizer.Core
         /// </summary>
         /// <returns>The results of the command.</returns>
         /// <see cref="Twitterizer.Core.TwitterObject"/>
-        TwitterResponse<T> ExecuteCommand();
+        Task<TwitterResponse<T>> ExecuteCommand();
+
+        /// <summary>
+        /// Deserializes the results.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns>`0.</returns>
+        void DeserializeResults(byte[] data, TwitterResponse<T> response);
     }
 }

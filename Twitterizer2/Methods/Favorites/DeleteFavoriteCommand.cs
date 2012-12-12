@@ -43,7 +43,6 @@ namespace Twitterizer.Commands
     /// Un-favorites the status specified in the ID parameter as the authenticating user. 
     /// Returns the un-favorited status in the requested format when successful.
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

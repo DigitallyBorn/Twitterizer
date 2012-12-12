@@ -43,7 +43,6 @@ namespace Twitterizer.Commands
     /// Deletes the saved search specified in the ID parameter as the authenticating user. 
     /// Returns the deleted saved search in the requested format when successful.
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

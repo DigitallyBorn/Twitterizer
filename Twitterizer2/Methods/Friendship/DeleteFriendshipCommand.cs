@@ -41,7 +41,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The delete friendship command class.
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif

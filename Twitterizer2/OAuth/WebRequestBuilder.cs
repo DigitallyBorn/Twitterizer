@@ -42,6 +42,7 @@ namespace Twitterizer
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
 #if SILVERLIGHT
     using System.Net.Browser;
     using System.Threading;
@@ -236,12 +237,12 @@ namespace Twitterizer
         /// Executes the request.
         /// </summary>
         /// <returns></returns>
-        public HttpWebResponse ExecuteRequest()
+        public async Task<WebResponse> ExecuteRequest()
         {
             HttpWebRequest request = PrepareRequest();
 
 #if !SILVERLIGHT
-            return (HttpWebResponse)request.GetResponse();
+            return await request.GetResponseAsync();
 #else
             request.AllowReadStreamBuffering = true;
             HttpWebResponse response = null;

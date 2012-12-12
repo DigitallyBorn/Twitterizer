@@ -40,7 +40,6 @@ namespace Twitterizer.Commands
     /// <summary>
     /// The Mentions Command class
     /// </summary>
-    [AuthorizedCommandAttribute]
 #if !SILVERLIGHT
     [Serializable]
 #endif
